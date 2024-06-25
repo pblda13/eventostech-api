@@ -16,14 +16,22 @@ import java.util.UUID;
 public class CouponService {
 
     @Autowired
-    private CouponRepository couponRepository;
+    private EventRepository eventRepository; // Repositório para operações de eventos
 
     @Autowired
-    private EventRepository eventRepository;
+    private CouponRepository couponRepository; // Repositório para operações de cupons
 
+    /**
+     * Adiciona um cupom a um evento específico.
+     *
+     * @param eventId    ID do evento ao qual o cupom será adicionado.
+     * @param couponData Dados do cupom a serem adicionados.
+     * @return O cupom adicionado.
+     * @throws IllegalArgumentException Se o evento não for encontrado.
+     */
     public Coupon addCouponToEvent(UUID eventId, CouponRequestDTO couponData) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new IllegalArgumentException("Event not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Evento não encontrado"));
 
         Coupon coupon = new Coupon();
         coupon.setCode(couponData.code());
@@ -33,7 +41,16 @@ public class CouponService {
 
         return couponRepository.save(coupon);
     }
+
+    /**
+     * Consulta cupons válidos para um evento específico e uma data atual.
+     *
+     * @param eventId     ID do evento para o qual os cupons serão consultados.
+     * @param currentDate Data atual para verificar a validade dos cupons.
+     * @return Lista de cupons válidos para o evento e data fornecidos.
+     */
     public List<Coupon> consultCoupons(UUID eventId, Date currentDate) {
         return couponRepository.findByEventIdAndValidAfter(eventId, currentDate);
     }
 }
+

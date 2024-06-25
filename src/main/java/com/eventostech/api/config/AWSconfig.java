@@ -11,8 +11,13 @@ import org.springframework.context.annotation.Configuration;
 public class AWSconfig {
 
     @Value("${aws.region}")
-    private String awsRegion;
+    private String awsRegion; // Região da AWS a ser configurada para o cliente S3
 
+    /**
+     * Cria uma instância do cliente Amazon S3 configurada com a região especificada.
+     *
+     * @return Instância configurada do cliente Amazon S3.
+     */
     @Bean
     public AmazonS3 createS3Instance(){
         return AmazonS3ClientBuilder

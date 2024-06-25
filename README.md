@@ -137,3 +137,5 @@ String event_url
 3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`).
 4. Faça o push para a branch (`git push origin feature/sua-feature`).
 5. Crie um novo Pull Request.
+
+![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fpblda13%2Feventostech-api&label=VISITORS&countColor=%23263759)

@@ -20,8 +20,21 @@ import java.util.UUID;
 public class EventController {
 
     @Autowired
-    private EventService eventService;
+    private EventService eventService; // Serviço responsável por operações relacionadas a eventos
 
+    /**
+     * Endpoint para criar um novo evento.
+     *
+     * @param title       Título do evento.
+     * @param description Descrição do evento (opcional).
+     * @param date        Data do evento em formato Unix timestamp.
+     * @param city        Cidade onde ocorrerá o evento.
+     * @param state       Estado onde ocorrerá o evento.
+     * @param remote      Indica se o evento é remoto ou não.
+     * @param eventUrl    URL relacionada ao evento.
+     * @param image       Imagem associada ao evento (opcional).
+     * @return ResponseEntity com o novo evento criado.
+     */
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<Event> create(@RequestParam("title") String title,
                                         @RequestParam(value = "description", required = false) String description,
@@ -36,12 +49,31 @@ public class EventController {
         return ResponseEntity.ok(newEvent);
     }
 
+    /**
+     * Endpoint para obter todos os eventos paginados.
+     *
+     * @param page Número da página solicitada (padrão é 0).
+     * @param size Tamanho da página (padrão é 10).
+     * @return ResponseEntity com a lista de eventos encontrados.
+     */
     @GetMapping
-    public ResponseEntity<List<EventResponseDTO>> getEvents(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<List<EventResponseDTO>> getEvents(@RequestParam(defaultValue = "0") int page,
+                                                            @RequestParam(defaultValue = "10") int size) {
         List<EventResponseDTO> allEvents = this.eventService.getUpcomingEvents(page, size);
         return ResponseEntity.ok(allEvents);
     }
 
+    /**
+     * Endpoint para obter eventos filtrados por cidade, estado, data de início e data de fim.
+     *
+     * @param page      Número da página solicitada (padrão é 0).
+     * @param size      Tamanho da página (padrão é 10).
+     * @param city      Cidade para filtro.
+     * @param uf        Estado para filtro.
+     * @param startDate Data de início para filtro (formato ISO Date).
+     * @param endDate   Data de fim para filtro (formato ISO Date).
+     * @return ResponseEntity com a lista de eventos filtrados.
+     */
     @GetMapping("/filter")
     public ResponseEntity<List<EventResponseDTO>> getFilteredEvents(@RequestParam(defaultValue = "0") int page,
                                                                     @RequestParam(defaultValue = "10") int size,
@@ -53,6 +85,12 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    /**
+     * Endpoint para buscar eventos por título.
+     *
+     * @param title Título do evento para busca.
+     * @return ResponseEntity com a lista de eventos encontrados.
+     */
     @GetMapping("/search")
     public ResponseEntity<List<EventResponseDTO>> getSearchEvents(@RequestParam String title) {
         List<EventResponseDTO> events = eventService.searchEvents(title);
