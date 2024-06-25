@@ -56,6 +56,6 @@ public class EventController {
     @GetMapping("/search")
     public ResponseEntity<List<EventResponseDTO>> getSearchEvents(@RequestParam String title) {
         List<EventResponseDTO> events = eventService.searchEvents(title);
-        return ResponseEntity.ok(eventDetails);
+        return ResponseEntity.ok(events);
     }
 }
