@@ -65,7 +65,7 @@ O sistema permite que o usuário consulte todos os detalhes de um evento especí
 
 ### Diagrama ER
 
-mermaid
+```mermaid
 erDiagram
 EVENT {
 UUID id
@@ -95,7 +95,7 @@ String event_url
     EVENT ||--o{ COUPON : has
     EVENT ||--o{ ADDRESS : located_at
 
-
+```
 ## Tecnologias Utilizadas
 
 - **Java**
